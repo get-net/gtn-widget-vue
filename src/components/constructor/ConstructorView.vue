@@ -82,7 +82,6 @@ export default {
                 })
                 if(validationPassed) {
                     this.saveFiles()
-                    onFormUpdate()
                     let body = {
                         detail: this.currentTemplate.uid,
                         status: "new"
@@ -123,7 +122,7 @@ export default {
         }
     },
     created: function () {
-        this.debouncedUpdate = debounce(this.onFormUpdate, 5000)
+        this.debouncedUpdate = debounce(this.onFormUpdate, 2500)
     },
 }
 </script>
