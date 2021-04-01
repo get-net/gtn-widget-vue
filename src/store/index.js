@@ -37,10 +37,11 @@ export default new Vuex.Store({
         getInvitationData(ctx, body) {
             return kyc.get(`/get_detailtype?code=${body.code}&client_uid=${body.client_id}`).then(({data}) =>{
                 if (data) {
-                    if (data.detailtype.embed) {
-                        data.detailtype.data = [JSON.parse(data.detailtype.data)]
+                    let parsed_detail = JSON.parse(data.detailtype.data)
+                    if (!Array.isArray(parsed_detail)) {
+                        data.detailtype.data = [parsed_detail]
                     } else {
-                        data.detailtype.data = JSON.parse(data.detailtype.data)
+                        data.detailtype.data = parsed_detail
                     }
                     ctx.commit('setCounterparty', data.counterparty)
                     ctx.commit('setTemplate', data.detailtype);

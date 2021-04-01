@@ -1,6 +1,6 @@
 <template>
   <div>
-    <invite-widget client="03a23040-7b1d-11eb-b480-c7398dc5effd"></invite-widget>
+    <invite-widget client="c01512d0-9222-11eb-b482-6f5342f32225"></invite-widget>
   </div>
 </template>
 
