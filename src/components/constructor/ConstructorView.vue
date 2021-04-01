@@ -82,6 +82,7 @@ export default {
                 })
                 if(validationPassed) {
                     this.saveFiles()
+                    onFormUpdate()
                     let body = {
                         detail: this.currentTemplate.uid,
                         status: "new"
