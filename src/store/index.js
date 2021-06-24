@@ -9,43 +9,47 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        template: null,
+        form: null,
         counterparty: null,
         token: null,
         unit: null,
         fileLink: null,
+        details: []
     },
     getters: {
-        template: state => state.template,
+        form: state => state.form,
         counterparty: state => state.counterparty,
         token: state => state.token,
         unit: state => state.unit,
-        fileLink: state => state.fileLink
+        fileLink: state => state.fileLink,
+        details: state => state.details
     },
     mutations: {
         reset: () => {},
-        setTemplate: (state, newTemplate) => Vue.set(state, 'template', newTemplate),
+        setForm: (state, newForm) => Vue.set(state, 'form', newForm),
         setCounterparty: (state, counterparty) => Vue.set(state, 'counterparty', counterparty),
         setToken: (state, token) => Vue.set(state, 'token', token),
         setUnit: (state, unit) => Vue.set(state, 'unit', unit),
-        setFileLink: (state, link) => Vue.set(state, 'fileLink', link)
+        setFileLink: (state, link) => Vue.set(state, 'fileLink', link),
+        setDetails: (state, details) => Vue.set(state, 'details', details)
     },
     actions: {
         showError: (ctx, e) => {
             return e;
         },
-        getInvitationData(ctx, body) {
-            return kyc.get(`/get_detailtype?code=${body.code}&client_uid=${body.client_id}`).then(({data}) =>{
+        async getInvitationData(ctx, body) {
+            return kyc.get(`/get_invite_data_third_party?code=${body.code}&client_uid=${body.client_id}`).then(({data}) =>{
                 if (data) {
-                    let parsed_detail = JSON.parse(data.detailtype.data)
-                    if (!Array.isArray(parsed_detail)) {
-                        data.detailtype.data = [parsed_detail]
-                    } else {
-                        data.detailtype.data = parsed_detail
-                    }
-                    ctx.commit('setCounterparty', data.counterparty)
-                    ctx.commit('setTemplate', data.detailtype);
+                    ctx.commit('setCounterparty', data.counterparty);                
                     ctx.commit('setToken', data.token.access);
+
+                    return kyc.get(`/constructor?uid=${data.uid_form}`).then(({data}) => {
+                        ctx.commit('setForm', data)
+                    }).then(() => {
+                        return kycClient.get("/oauth/userinfo").then(({data}) => {
+                            ctx.commit('setDetails', data.counterparty.detail)
+                        })
+                    })
                 }
             })
         },
@@ -55,6 +59,9 @@ export default new Vuex.Store({
                     return true
                 }
             })
+        },
+        userinfo(ctx) {
+            
         },
         updateDetailStatus(ctx, body) {
             return kycClient.post("/profile/detail/status", body);

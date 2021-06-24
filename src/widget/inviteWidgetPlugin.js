@@ -12,7 +12,9 @@ import {
     FormFilePlugin,
     FormCheckboxPlugin,
     FormGroupPlugin,
-    FormRadioPlugin
+    FormRadioPlugin,
+    SpinnerPlugin,
+    FormSelectPlugin
  } from "bootstrap-vue";
 const plugin = {
     install: function(Vue) {
@@ -30,7 +32,9 @@ const plugin = {
         Vue.use(FormFilePlugin);
         Vue.use(FormCheckboxPlugin);
         Vue.use(FormGroupPlugin);
-        Vue.use(FormRadioPlugin)
+        Vue.use(FormRadioPlugin);
+        Vue.use(SpinnerPlugin);
+        Vue.use(FormSelectPlugin)
         Vue.component("invite-widget", inviteWidget)
     }
 }
