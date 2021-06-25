@@ -14,7 +14,9 @@ export default new Vuex.Store({
         token: null,
         unit: null,
         fileLink: null,
-        details: []
+        details: [],
+        inviteFormUid: null,
+        formSent: false
     },
     getters: {
         form: state => state.form,
@@ -22,7 +24,9 @@ export default new Vuex.Store({
         token: state => state.token,
         unit: state => state.unit,
         fileLink: state => state.fileLink,
-        details: state => state.details
+        details: state => state.details,
+        inviteFormUid: state => state.inviteFormUid,
+        formSent: state => state.formSent
     },
     mutations: {
         reset: () => {},
@@ -31,7 +35,9 @@ export default new Vuex.Store({
         setToken: (state, token) => Vue.set(state, 'token', token),
         setUnit: (state, unit) => Vue.set(state, 'unit', unit),
         setFileLink: (state, link) => Vue.set(state, 'fileLink', link),
-        setDetails: (state, details) => Vue.set(state, 'details', details)
+        setDetails: (state, details) => Vue.set(state, 'details', details),
+        setInviteFormUid: (state, uid) => Vue.set(state, 'inviteFormUid', uid),
+        setFormSent: (state, sent) => Vue.set(state, 'formSent', sent)
     },
     actions: {
         showError: (ctx, e) => {
@@ -42,8 +48,12 @@ export default new Vuex.Store({
                 if (data) {
                     ctx.commit('setCounterparty', data.counterparty);                
                     ctx.commit('setToken', data.token.access);
-
-                    return kyc.get(`/constructor?uid=${data.uid_form}`).then(({data}) => {
+                    ctx.commit('setInviteFormUid', data.invite_form.uid);
+                    if (data.invite_form.sid_status) {
+                        ctx.commit("setFormSent", true)
+                        return
+                    }
+                    return kyc.get(`/constructor?uid=${data.invite_form.form}`).then(({data}) => {
                         ctx.commit('setForm', data)
                     }).then(() => {
                         return kycClient.get("/oauth/userinfo").then(({data}) => {
@@ -65,6 +75,9 @@ export default new Vuex.Store({
         },
         updateDetailStatus(ctx, body) {
             return kycClient.post("/profile/detail/status", body);
+        },
+        updateInviteFormStatus(ctx, body) {
+            return kyc.post("/invite_form/update", body)
         },
         async uploadFileToFileManager(ctx, body) {  
             let payload = {

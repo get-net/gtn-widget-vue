@@ -60,7 +60,6 @@ export default {
                 },
             },
             locale: "en",
-            formSent: false,
             currentForm: null,
         };
     },
@@ -69,6 +68,9 @@ export default {
         counterparty() {
             return store.getters["counterparty"];
         },
+        formSent() {
+          return store.getters["formSent"]
+        }
     },
 
     methods: {
@@ -95,7 +97,13 @@ export default {
                 });
                 if (validationPassed) {
                     this.saveFiles();
-                    this.formSent = true;
+                    
+                    let body = {
+                      uid: store.getters["inviteFormUid"],
+                      sid_status: "new"
+                    }
+                    store.dispatch("updateInviteFormStatus", body)
+                    store.commit("formSent", true)
                 }
             });
         },
