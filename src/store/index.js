@@ -70,9 +70,6 @@ export default new Vuex.Store({
                 }
             })
         },
-        userinfo(ctx) {
-            
-        },
         updateDetailStatus(ctx, body) {
             return kycClient.post("/profile/detail/status", body);
         },
