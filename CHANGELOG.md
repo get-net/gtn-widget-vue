@@ -8,3 +8,4 @@ All notable changes to this project will be documented in this file.
 ### Changed
 - Comment out global classes in _custom.scss
 - Add global class .widget in _custom.scss and added inheritance of other classes from the global
+- rename global class .widget -> .gtn-auth-widget
