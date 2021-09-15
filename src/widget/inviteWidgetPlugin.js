@@ -16,6 +16,7 @@ import {
     SpinnerPlugin,
     FormSelectPlugin
  } from "bootstrap-vue";
+
 const plugin = {
     install: function(Vue) {
         if (!window.__$ncform) {
