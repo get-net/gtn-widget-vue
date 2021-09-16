@@ -97,7 +97,7 @@ export default {
                 });
                 if (validationPassed) {
                     this.saveFiles();
-                    
+
                     let body = {
                       uid: store.getters["inviteFormUid"],
                       sid_status: "new"
@@ -157,6 +157,7 @@ export default {
             let form = store.getters["form"];
             if (form) {
                 form.sections.forEach((section) => {
+                    // eslint-disable-next-line no-unused-vars
                     section.detailtypes.forEach((detailtype) => {
                         detailtype = constructorHelper.parseDetailtype(
                             detailtype

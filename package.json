@@ -1,6 +1,6 @@
 {
   "name": "gtn-widget-vue",
-  "version": "1.2.30",
+  "version": "1.2.31",
   "repository": {
     "type": "git",
     "url": "https://github.com/get-net/gtn-widget-vue"
@@ -60,8 +60,8 @@
     "not dead"
   ],
   "main": "dist/gtn-widget-vue.umd.js",
-  "description": "Get Net widget",
-  "author": "Arsenii Temnik",
+  "description": "Get-Net widget",
+  "author": "Get-Net, LLC",
   "keywords": [
     "get-net",
     "widget",
