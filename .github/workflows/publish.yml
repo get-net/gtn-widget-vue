@@ -17,7 +17,7 @@ jobs:
                 registry-url: https://registry.npmjs.org
           - name: install dep
             run: npm install -g @vue/cli-service
-          - name: publish
+          - name: publish in npm
             run: npm publish --access public
             env:
                 NODE_AUTH_TOKEN: ${{secrets.NPM_ACCESS_TOKEN}}
