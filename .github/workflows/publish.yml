@@ -15,8 +15,10 @@ jobs:
             with:
                 node-version: 14
                 registry-url: https://registry.npmjs.org
-          - name: add vue-cli-services
-            run: npm i @vue/cli-service
+          - name: Install Dependencies
+            run: npm i
+          - name: build app
+            run: npm run prepublishOnly
           - name: publish
             run: npm publish --access public
             env:
