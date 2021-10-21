@@ -15,8 +15,8 @@ jobs:
             with:
                 node-version: 14
                 registry-url: https://registry.npmjs.org
-          - name: Install Dependencies
-            run: npm i
+          - name: install
+            run: npm install
           - name: build app
             run: npm run prepublishOnly
           - name: publish
